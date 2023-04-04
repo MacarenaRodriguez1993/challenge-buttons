@@ -14,12 +14,14 @@ const App = () => {
     text: "",
   });
   const [error, setError] = useState();
+  const api_url = process.env.REACT_APP_API_URL;
+
   useEffect(() => {
     getButtons();
   }, []);
   const getButtons = async () => {
     await axios
-      .get("http://localhost:3001/")
+      .get(api_url)
       .then((response) => {
         setButtons(response.data);
       })
@@ -30,7 +32,7 @@ const App = () => {
   const handleAddButton = async () => {
     console.log(input);
     await axios
-      .post("http://localhost:3001/", input)
+      .post(api_url, input)
       .then((response) => {
         setButtons([...buttons, response.data]);
       })
@@ -41,7 +43,7 @@ const App = () => {
   };
   const deleteButton = async (id) => {
     await axios
-      .delete(`http://localhost:3001/${id}`)
+      .delete(`${api_url}/${id}`)
       .then((response) => {
         const updateButtons = buttons.filter((b) => b.id !== id);
         setButtons(updateButtons);
@@ -52,7 +54,7 @@ const App = () => {
   };
   const handleClick = async (data) => {
     data.count++;
-    await axios.put(`http://localhost:3001`, data);
+    await axios.put(api_url, data);
     const updateButtons = buttons.map((b) => {
       if (b.id === data.id) {
         return { ...b };

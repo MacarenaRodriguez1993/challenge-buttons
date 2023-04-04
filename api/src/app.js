@@ -9,6 +9,6 @@ const server = express();
 server.use(morgan("dev"));
 server.use(cors());
 server.use(express.json());
-server.use("/", routes);
+server.use("/button", routes);
 
 module.exports = server;
