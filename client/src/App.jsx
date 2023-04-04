@@ -3,18 +3,17 @@ import "./App.css";
 import axios from "axios";
 import ButtonList from "./components/buttonList/buttonList";
 import ButtonAdd from "./components/buttonAdd/buttonAdd";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const App = () => {
   const [buttons, setButtons] = useState([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
   const [input, setInput] = useState({
     text: "",
   });
-
+  const [error, setError] = useState();
   useEffect(() => {
     getButtons();
   }, []);
@@ -25,7 +24,7 @@ const App = () => {
         setButtons(response.data);
       })
       .catch((error) => {
-        console.log("Error feching", error);
+        setError(error.message);
       });
   };
   const handleAddButton = async () => {
@@ -36,7 +35,7 @@ const App = () => {
         setButtons([...buttons, response.data]);
       })
       .catch((error) => {
-        console.log("Error", error);
+        setError(error.message);
       });
     setOpen(false);
   };
@@ -48,7 +47,7 @@ const App = () => {
         setButtons(updateButtons);
       })
       .catch((error) => {
-        console.log(error);
+        setError(error.message);
       });
   };
   const handleClick = async (data) => {
@@ -85,7 +84,11 @@ const App = () => {
             handleClose={handleClose}
           />
         </Box>
-
+        {error && (
+          <Typography style={{ textAlign: "center", marginTop: "1em" }}>
+            {error}
+          </Typography>
+        )}
         <ButtonList
           buttons={buttons}
           deleteButton={deleteButton}
