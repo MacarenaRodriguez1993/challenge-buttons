@@ -2,8 +2,14 @@
   text-align: center;
   background-color: #282c34;
   min-height: 100vh;
-  color: bisque;
+  color: #fff;
 }
 h1 {
   margin: 0;
+}
+header {
+  height: fit-content;
+  padding: 2em;
+  background-color: bisque;
+  color: #9c27b0;
 }
